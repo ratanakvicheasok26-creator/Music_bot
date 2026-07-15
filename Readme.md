@@ -1,61 +1,58 @@
-# Telegram Music Bot
+# Shared Playlist Telegram Bot
 
-A Telegram music bot that supports YouTube, Spotify, and local audio files.
+A Telegram bot for a group chat: anyone can add songs by name or link, and
+they all land in one shared playlist for the chat. No paid API keys needed —
+songs are found via YouTube search.
 
-## Features
+## 1. Get a bot token
 
-- Play music from YouTube (search or URL)
-- Play music from Spotify (track or playlist)
-- Play local audio files
-- Voice chat playback
-- Queue management
-- Pause / Resume / Skip controls
+1. Open Telegram, search for **@BotFather**.
+2. Send `/newbot` and follow the prompts (choose a name and a username
+   ending in `bot`).
+3. BotFather gives you a token like `123456789:ABCdefGhIJKlmNoPQRstuVwxyZ`.
+4. Open `bot.py` and paste it in for `BOT_TOKEN`.
 
-## Requirements
+## 2. Install dependencies
 
-- Python 3.9+
-- FFmpeg installed on your system
-- Telegram API credentials (from my.telegram.org)
-- Telegram Bot Token (from @BotFather)
-- Spotify API credentials (optional, from developer.spotify.com)
+```bash
+pip install -r requirements.txt
+```
 
-## Setup
+(If you get a "externally managed environment" error, add
+`--break-system-packages` to the command, or use a virtual environment.)
 
-1. Clone this repository
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Copy `.env.example` to `.env` and fill in your credentials:
-   ```bash
-   cp .env.example .env
-   ```
-4. Run the bot:
-   ```bash
-   python Bot.py
-   ```
+## 3. Run it
 
-## Environment Variables
+```bash
+python3 bot.py
+```
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BOT_TOKEN` | Yes | Telegram bot token from @BotFather |
-| `API_ID` | Yes | Telegram API ID from my.telegram.org |
-| `API_HASH` | Yes | Telegram API hash from my.telegram.org |
-| `SPOTIFY_CLIENT_ID` | No | Spotify API client ID |
-| `SPOTIFY_CLIENT_SECRET` | No | Spotify API client secret |
-| `OWNER_ID` | No | Telegram user ID of the bot owner |
+Add the bot to your group chat, then in Telegram:
 
-## Commands
+- `/add faded alan walker` — searches YouTube and adds it to the playlist
+- `/add https://youtube.com/watch?v=...` — adds a direct link too
+- `/playlist` — lists everything added so far, with who added it
+- `/play 2` — sends the link for song #2
+- `/remove 2` — removes song #2
+- `/clear` — wipes the whole playlist
 
-| Command | Description |
-|---------|-------------|
-| `/start` | Start the bot |
-| `/play <query>` | Play a song by name or URL |
-| `/playfile` | Reply to an audio file to play it |
-| `/pause` | Pause playback |
-| `/resume` | Resume playback |
-| `/stop` | Stop and clear queue |
-| `/skip` | Skip current song |
-| `/queue` | Show current queue |
-| `/now` | Show now playing |
+Each group chat gets its own playlist automatically (songs are stored per
+`chat_id`), so if you add this bot to multiple groups they won't mix.
+
+## 4. Keeping it running 24/7
+
+`python3 bot.py` only runs while your terminal is open. To keep the bot
+online all the time, you have two easy free-tier options:
+
+- **Railway** or **Render**: push this folder to GitHub, connect the repo,
+  set it to run `python3 bot.py` as a background worker. Put `BOT_TOKEN` in
+  an environment variable instead of hardcoding it (recommended either way).
+- **Your own machine / a Raspberry Pi**: run it inside `tmux` or `screen` so
+  it survives closing the terminal.
+
+## Notes
+
+- `playlist.db` is a small SQLite file created automatically the first time
+  you run the bot — that's where all the songs are stored.
+- If a `/add` search doesn't find anything, try being more specific
+  (song + artist name works best).
