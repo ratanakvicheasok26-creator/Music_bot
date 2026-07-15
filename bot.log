@@ -1,0 +1,7 @@
+2026-07-15 23:40:29,459 - __main__ - INFO - Bot starting...
+2026-07-15 23:40:30,302 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8916132863:AAF5emgOUupA-dB3GJ0h3aQKLB_yqB2qLqg/getMe "HTTP/1.1 200 OK"
+2026-07-15 23:40:30,628 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8916132863:AAF5emgOUupA-dB3GJ0h3aQKLB_yqB2qLqg/deleteWebhook "HTTP/1.1 200 OK"
+2026-07-15 23:40:30,634 - telegram.ext.Application - INFO - Application started
+2026-07-15 23:40:39,329 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8916132863:AAF5emgOUupA-dB3GJ0h3aQKLB_yqB2qLqg/getUpdates "HTTP/1.1 200 OK"
+2026-07-15 23:40:39,338 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2026-07-15 23:40:39,341 - telegram.ext.Application - INFO - Application.stop() complete
